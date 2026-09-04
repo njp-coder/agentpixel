@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Telemetry verification fixture</title></head>
+<body>
+<h1>Telemetry fixture</h1>
+<p id="status">starting…</p>
+
+<form toolname="subscribe_newsletter" tooldescription="Subscribe to the newsletter" toolautosubmit
+      onsubmit="event.preventDefault()">
+  <input name="email" type="email" value="a@b.com">
+  <button type="submit">Subscribe</button>
+</form>
+
+<script type="module">
+import { instrument, custom, dataLayer } from "/dist/index.js";
+
+// Events land in both a raw array and the GTM data layer, so the verification
+// can check the adapter as well as the core.
+window.__events = [];
+instrument({ sinks: [custom(e => window.__events.push(e)), dataLayer()] });
+
+const ctx = document.modelContext ?? navigator.modelContext;
+if (!ctx) {
+  document.getElementById('status').textContent = 'no WebMCP';
+} else {
+  await ctx.registerTool({
+    name: 'search_products',
+    description: 'Search the catalog',
+    annotations: { readOnlyHint: true },
+    inputSchema: { type: 'object', properties: { query: { type: 'string' } }, required: ['query'] },
+    execute: async ({ query }) => ({ content: [{ type: 'text', value: `found ${query}` }] }),
+  });
+  await ctx.registerTool({
+    name: 'fail_on_purpose',
+    description: 'Always throws',
+    inputSchema: { type: 'object', properties: {} },
+    execute: async () => { throw new Error('boom'); },
+  });
+  document.getElementById('status').textContent = 'ready';
+}
+</script>
+</body>
+</html>

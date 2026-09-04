@@ -1,0 +1,39 @@
+{
+  "name": "@sponsio/telemetry",
+  "version": "0.1.0",
+  "description": "See what AI agents actually do on your site. Sends WebMCP tool calls to the analytics you already use — GA4, GTM, PostHog, Segment.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc",
+    "test": "npm run build && node --test test/*.test.js",
+    "fixture": "npm run build \\&\\& node serve.js"
+  },
+  "keywords": [
+    "webmcp",
+    "analytics",
+    "ga4",
+    "gtm",
+    "posthog",
+    "segment",
+    "ai-agents",
+    "telemetry"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0"
+  }
+}

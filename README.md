@@ -1,17 +1,17 @@
-# @sponsio/telemetry
+# agentpixel
 
-**See what AI agents actually do on your site — in the analytics you already use.**
+**The pixel for AI agent traffic.** See what agents actually do on your site, in the analytics you already use.
 
 A WebMCP tool call is a plain function call inside your page. It fires no page view, no click, no form submission. So an agent that searches your catalog, adds to a cart and checks out leaves you **one page view and a conversion with no funnel behind it**.
 
 Neither the WebMCP spec nor Chrome's documentation mentions measurement anywhere. This is one line of setup, and no new analytics stack.
 
 ```bash
-npm install @sponsio/telemetry
+npm install agentpixel
 ```
 
 ```js
-import { instrument, dataLayer } from "@sponsio/telemetry";
+import { instrument, dataLayer } from "agentpixel";
 
 instrument({ sinks: [dataLayer()] });
 ```
@@ -21,7 +21,7 @@ Every agent tool call now arrives in GTM as `agent_tool_call`, with the tool nam
 ## Adapters
 
 ```js
-import { instrument, gtag, dataLayer, posthog, segment, mixpanel, custom, debug } from "@sponsio/telemetry";
+import { instrument, gtag, dataLayer, posthog, segment, mixpanel, custom, debug } from "agentpixel";
 
 instrument({ sinks: [gtag(), posthog()] });
 ```

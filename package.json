@@ -20,7 +20,8 @@
   "scripts": {
     "build": "tsc",
     "test": "npm run build && node --test test/*.test.js",
-    "fixture": "npm run build \\&\\& node serve.js"
+    "fixture": "npm run build \\&\\& node serve.js",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "webmcp",

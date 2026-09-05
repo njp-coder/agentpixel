@@ -98,6 +98,11 @@ export function debug(): Sink {
 function flatten(event: AgentEvent): Record<string, unknown> {
   const flat: Record<string, unknown> = { session_id: event.sessionId };
 
+  // Flattened so a variant is a breakdown dimension in any analytics product.
+  for (const [name, value] of Object.entries(event.experiments ?? {})) {
+    flat[`exp_${sanitize(name)}`] = value;
+  }
+
   switch (event.type) {
     case "tool_call":
       flat["tool_name"] = event.tool;

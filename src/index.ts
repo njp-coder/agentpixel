@@ -9,11 +9,15 @@
  * estimate — see the "Cannot be observed" note in the README.
  */
 
+import { currentAssignments } from "./experiment.js";
+
 export type ToolKind = "imperative" | "declarative";
 
 interface BaseEvent {
   /** Ephemeral, per page load. Never stored, never sent anywhere by us. */
   sessionId: string;
+  /** Tool-surface variants this page load was assigned, if any are running. */
+  experiments?: Record<string, string>;
 }
 
 export interface ToolEvent extends BaseEvent {
@@ -350,7 +354,11 @@ function describe(value: unknown): string {
 
 /** A sink that throws must never break a tool call, so every one is isolated. */
 function makeEmitter(sinks: Sink[]): (event: AgentEvent) => void {
-  return (event) => {
+  return (rawEvent) => {
+    // Attached at emit time rather than at construction, so a variant assigned
+    // after instrument() still lands on the events that follow it.
+    const experiments = currentAssignments();
+    const event = experiments ? { ...rawEvent, experiments } : rawEvent;
     for (const sink of sinks) {
       try {
         sink(event);
@@ -388,3 +396,4 @@ interface SubmitEventLike extends Event {
 }
 
 export * from "./sinks.js";
+export * from "./experiment.js";

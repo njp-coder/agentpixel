@@ -46,6 +46,29 @@ recordOutcome("purchase", { value: 129, currency: "USD" });
 
 It is deliberately silent outside an agent session — a human converting is your ordinary analytics, and counting it here would inflate every number that makes this worth installing.
 
+## Testing your tool surface
+
+"Agents invoke `find_products` 37% more often than your current schema" sounds like it needs a panel of sites. It doesn't — register both variants, assign one per page load, and measure it on your own traffic.
+
+```js
+import { experiment, instrument, gtag } from "agentpixel";
+
+instrument({ sinks: [gtag()] });
+
+const naming = experiment("search-naming", ["search_products", "find_products"]);
+document.modelContext.registerTool({ name: naming.value, /* … */ });
+```
+
+Every event this session emits then carries `exp_search_naming`, so invocation rate by variant is a breakdown in GA4 rather than a query you have to write. Vary anything you like — the name, the description, an enum, a parameter you are thinking of adding.
+
+**The denominator works because of `agent_session_start`.** A session counts toward whichever variant was live the moment *any* tool was called, so you can divide sessions-that-called-`find_products` by sessions-that-saw-`find_products`.
+
+Three things to know before you trust a result:
+
+- **It excludes sessions where the agent called nothing at all**, because those are indistinguishable from a human visit. The measurement is biased toward agents that engaged with something.
+- **It needs volume.** Two variants and a handful of agent sessions is not a result, it is noise wearing a percentage sign.
+- **Varying your surface is real contract drift.** [`sponsio`](https://github.com/sponsio/sponsio) will flag it, and it is right to — baseline the control variant and treat the experiment as a deliberate exception.
+
 ## What cannot be observed
 
 Stated plainly, because the alternative is you finding out in front of a customer.

@@ -43,10 +43,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GITHUB_OWNER/agentpixel.git"
+    "url": "git+https://github.com/njp-coder/agentpixel.git"
   },
   "bugs": {
-    "url": "https://github.com/GITHUB_OWNER/agentpixel/issues"
+    "url": "https://github.com/njp-coder/agentpixel/issues"
   },
-  "homepage": "https://github.com/GITHUB_OWNER/agentpixel#readme"
+  "homepage": "https://github.com/njp-coder/agentpixel#readme"
 }

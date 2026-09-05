@@ -67,7 +67,7 @@ Three things to know before you trust a result:
 
 - **It excludes sessions where the agent called nothing at all**, because those are indistinguishable from a human visit. The measurement is biased toward agents that engaged with something.
 - **It needs volume.** Two variants and a handful of agent sessions is not a result, it is noise wearing a percentage sign.
-- **Varying your surface is real contract drift.** [`sponsio`](https://github.com/GITHUB_OWNER/sponsio) will flag it, and it is right to — baseline the control variant and treat the experiment as a deliberate exception.
+- **Varying your surface is real contract drift.** [`sponsio`](https://github.com/njp-coder/sponsio) will flag it, and it is right to — baseline the control variant and treat the experiment as a deliberate exception.
 
 ## What cannot be observed
 
@@ -155,6 +155,6 @@ If you want traces rather than analytics events, [`autotel-webmcp`](https://gith
 
 ## Related
 
-[`sponsio`](https://github.com/GITHUB_OWNER/sponsio) — contract testing for the tools your site exposes to agents. Its audit tells you when none of your tools emit any telemetry; this is the fix.
+[`sponsio`](https://github.com/njp-coder/sponsio) — contract testing for the tools your site exposes to agents. Its audit tells you when none of your tools emit any telemetry; this is the fix.
 
 MIT

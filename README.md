@@ -1,5 +1,9 @@
 # agentpixel
 
+[![npm](https://img.shields.io/npm/v/agentpixel?color=%237c8cff)](https://www.npmjs.com/package/agentpixel)
+[![license](https://img.shields.io/npm/l/agentpixel?color=%237c8cff)](https://github.com/njp-coder/agentpixel/blob/main/LICENSE)
+[![zero dependencies](https://img.shields.io/badge/dependencies-0-%237c8cff)](https://www.npmjs.com/package/agentpixel?activeTab=dependencies)
+
 **The pixel for AI agent traffic.** See what agents actually do on your site, in the analytics you already use.
 
 A WebMCP tool call is a plain function call inside your page. It fires no page view, no click, no form submission. So an agent that searches your catalog, adds to a cart and checks out leaves you **one page view and a conversion with no funnel behind it**.
@@ -67,7 +71,7 @@ Three things to know before you trust a result:
 
 - **It excludes sessions where the agent called nothing at all**, because those are indistinguishable from a human visit. The measurement is biased toward agents that engaged with something.
 - **It needs volume.** Two variants and a handful of agent sessions is not a result, it is noise wearing a percentage sign.
-- **Varying your surface is real contract drift.** [`sponsio`](https://github.com/njp-coder/sponsio) will flag it, and it is right to — baseline the control variant and treat the experiment as a deliberate exception.
+- **Varying your surface is real contract drift.** [`sponsio`](https://www.npmjs.com/package/sponsio) will flag it, and it is right to — baseline the control variant and treat the experiment as a deliberate exception.
 
 ## What cannot be observed
 
@@ -155,6 +159,10 @@ If you want traces rather than analytics events, [`autotel-webmcp`](https://gith
 
 ## Related
 
-[`sponsio`](https://github.com/njp-coder/sponsio) — contract testing for the tools your site exposes to agents. Its audit tells you when none of your tools emit any telemetry; this is the fix.
+[`sponsio`](https://www.npmjs.com/package/sponsio) — contract testing for the tools your site exposes to agents. Its audit tells you when none of your tools emit any telemetry; this is the fix.
+
+## Links
+
+[npm](https://www.npmjs.com/package/agentpixel) · [source](https://github.com/njp-coder/agentpixel) · [issues](https://github.com/njp-coder/agentpixel/issues) · companion package [sponsio](https://www.npmjs.com/package/sponsio)
 
 MIT

@@ -13,7 +13,8 @@
   },
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "sideEffects": false,
   "scripts": {
@@ -35,5 +36,17 @@
   "devDependencies": {
     "@types/node": "^22.10.0",
     "typescript": "^5.7.0"
-  }
+  },
+  "author": "Naga Jyothi Prakash",
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GITHUB_OWNER/agentpixel.git"
+  },
+  "bugs": {
+    "url": "https://github.com/GITHUB_OWNER/agentpixel/issues"
+  },
+  "homepage": "https://github.com/GITHUB_OWNER/agentpixel#readme"
 }

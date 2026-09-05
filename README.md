@@ -18,6 +18,48 @@ instrument({ sinks: [dataLayer()] });
 
 Every agent tool call now arrives in GTM as `agent_tool_call`, with the tool name, duration, whether it succeeded, and an ephemeral session id.
 
+## The whole journey, not just the calls
+
+Four events, so a funnel is a query rather than a join:
+
+```
+agent_session_start   first_tool: search_products
+agent_tool_call       step: 1  search_products      142ms  ok
+agent_tool_call       step: 2  add_to_cart          38ms   ok   previous_tool: search_products
+agent_tool_call       step: 3  checkout             91ms   ok   previous_tool: add_to_cart
+agent_outcome         purchase  value: 129  tool_count: 3
+agent_session_end     tool_count: 3  error_count: 0  converted: true
+```
+
+**`agent_session_start`** fires on the first tool call — the moment a session is *known* to be agent-driven. That is what makes "agents versus humans" a segment you can select rather than a number you guess at.
+
+**Every call carries `step` and `previous_tool`**, so drop-off between two tools is one dimension pair in GA4 — no sequencing query, no BigQuery export.
+
+**`agent_session_end`** fires on `pagehide` with the tool count, error count, last tool and whether it converted, so abandonment is visible instead of inferred.
+
+**Report your own conversions** to tie the journey to something the business cares about:
+
+```js
+import { recordOutcome } from "agentpixel";
+recordOutcome("purchase", { value: 129, currency: "USD" });
+```
+
+It is deliberately silent outside an agent session — a human converting is your ordinary analytics, and counting it here would inflate every number that makes this worth installing.
+
+## What cannot be observed
+
+Stated plainly, because the alternative is you finding out in front of a customer.
+
+**Which agent it was.** Agentic browsers arrive on ordinary Chrome user agents with no distinguishing token, riding the user's own connection. Nothing here can tell ChatGPT from Claude from Gemini, and any tool claiming otherwise is guessing.
+
+**The prompt.** "Find me black running shoes under $150" lives in the agent's context and never reaches your page.
+
+**Agents that considered you and never arrived.** No request, nothing to observe. There is no lost-prompt metric to be had from a page.
+
+**Agents that arrived and called nothing.** Without a tool call there is no signal separating an agent from a person, so this is not measurable either — which means a "tool-call rate" with an eligible-intent denominator cannot be computed honestly today.
+
+What *is* fully observable is everything after the first call: the sequence, the timing, the failures, the abandonment, and the conversion. That is the funnel, and it is enough.
+
 ## Adapters
 
 ```js

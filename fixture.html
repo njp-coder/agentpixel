@@ -12,12 +12,14 @@
 </form>
 
 <script type="module">
-import { instrument, custom, dataLayer } from "/dist/index.js";
+import { instrument, custom, dataLayer, recordOutcome } from "/dist/index.js";
 
 // Events land in both a raw array and the GTM data layer, so the verification
 // can check the adapter as well as the core.
 window.__events = [];
 instrument({ sinks: [custom(e => window.__events.push(e)), dataLayer()] });
+// Exposed so the verification run can confirm outcomes attach to the session.
+window.__convert = () => recordOutcome('purchase', { value: 129, currency: 'USD' });
 
 const ctx = document.modelContext ?? navigator.modelContext;
 if (!ctx) {

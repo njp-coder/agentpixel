@@ -1,6 +1,6 @@
 {
   "name": "agentpixel",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "See what AI agents actually do on your site. Sends WebMCP tool calls to the analytics you already use — GA4, GTM, PostHog, Segment.",
   "type": "module",
   "main": "./dist/index.js",
